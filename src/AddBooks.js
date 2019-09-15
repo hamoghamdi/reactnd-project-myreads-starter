@@ -1,14 +1,29 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
+import * as BooksAPI from "./BooksAPI";
+import Book from './Book'
 
 class AddBooks extends Component {
     state ={
-        searchInput:""
+        searchInput: '',
+        searchResult:[]
     }
     handleChange =(e) =>{
+      const query = e.target.value
+      console.log('query', query)
         this.setState(() => {
-            return { searchInput: e.target.value}
+            return { searchInput: query };
         })
+    }
+    handleSubmit = (e) =>{
+      e.preventDefault()
+      console.log('this is submit')
+      BooksAPI.search(this.state.searchInput).then(res => {
+        console.log("search res", res);
+        this.setState(()=> {
+          return {searchResult: res}
+        })
+      });
     }
     render() {
         return (
@@ -18,24 +33,26 @@ class AddBooks extends Component {
                 <button className="close-search">Close</button>
               </Link>
               <div className="search-books-input-wrapper">
-                {/*
-                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                  You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                  you don't find a specific author or title. Every search is limited by search terms.
-                */}
-                <input
-                  type="text"
-                  placeholder="Search by title or author"
-                  value={this.state.searchInput}
-                  onChange={e => this.handleChange(e)}
-                />
+                <form onSubmit={e => this.handleSubmit(e)}>
+                  <input
+                    type="text"
+                    placeholder="Search by title or author"
+                    value={this.state.searchInput}
+                    onChange={e => this.handleChange(e)}
+                  />
+                </form>
               </div>
             </div>
             <div className="search-books-results">
-              <ol className="books-grid"></ol>
+              <ol className="books-grid">
+                {this.state.searchResult.map(book => (
+                  <Book
+                    key={book.id}
+                    book={book}
+                    onMoveBook={(e, book) => this.props.onMoveBook(e, book)}
+                  />
+                ))}
+              </ol>
             </div>
           </div>
         );

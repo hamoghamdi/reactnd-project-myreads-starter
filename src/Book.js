@@ -8,7 +8,7 @@ class Book extends Component {
   render() {
    
     return (
-            <li>
+      <li>
         <div className="book">
           <div className="book-top">
             <div
@@ -20,22 +20,44 @@ class Book extends Component {
               }}
             ></div>
             <div className="book-shelf-changer">
-              <select onChange={(e) => this.handleChange(e, this.props.book)} >
+              <select onChange={e => this.handleChange(e, this.props.book)} defaultValue={this.props.shelf}>
                 <option value="move" disabled>
                   Move to...
                 </option>
-                <option value="currentlyReading">Currently Reading</option>
-                <option value="wantToRead">Want to Read</option>
-                <option value="read">Read</option>
-                <option value="none">None</option>
+                <option
+                  value="currentlyReading"
+                  selected={this.props.book.shelf === "currentlyReading"}
+                >
+                  Currently Reading
+                </option>
+                <option
+                  value="wantToRead"
+                  selected={this.props.book.shelf === "wantToRead"}
+                >
+                  Want to Read
+                </option>
+                <option
+                  value="read"
+                  selected={this.props.book.shelf === "read"}
+                >
+                  Read
+                </option>
+                <option
+                  value="none"
+                  selected={this.props.book.shelf ? false : true}
+                >
+                  None
+                </option>
               </select>
             </div>
           </div>
           <div className="book-title">{this.props.book.title}</div>
           <div className="book-authors">
-            {this.props.book.authors.map((a, index) => (
-              <p key={index}>{a}</p>
-            ))}
+            {this.props.book.hasOwnProperty("authors")
+              ? this.props.book.authors.map((a, index) => (
+                  <p key={index}>{a}</p>
+                ))
+              : ""}
           </div>
         </div>
       </li>
