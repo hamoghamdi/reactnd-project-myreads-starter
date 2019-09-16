@@ -7,7 +7,7 @@ import * as BooksAPI from "./BooksAPI";
 
 class BooksApp extends React.Component {
   state = {
-    books: { currentlyReading: [], read: [], wantToRead: [] }
+    books: []
   };
 
   updateBooks = () => {
@@ -16,13 +16,8 @@ class BooksApp extends React.Component {
     BooksAPI.getAll()
       .then(res => {
         console.log("res", res);
-        const currentlyReading = res.filter(
-          b => b.shelf === "currentlyReading"
-        );
-        const read = res.filter(b => b.shelf === "read");
-        const wantToRead = res.filter(b => b.shelf === "wantToRead");
         this.setState(() => {
-          return { books: { currentlyReading, read, wantToRead } };
+          return { books: res };
         });
       })
       .catch(error => console.log("error", error));
@@ -43,23 +38,14 @@ class BooksApp extends React.Component {
     BooksAPI.getAll()
       .then(res => {
         console.log("res", res);
-        const currentlyReading = res.filter(
-          b => b.shelf === "currentlyReading"
-        );
-        const read = res.filter(b => b.shelf === "read");
-        const wantToRead = res.filter(b => b.shelf === "wantToRead");
         this.setState(() => {
-          return { books: { currentlyReading, read, wantToRead } };
+          return { books: res };
         });
       })
       .catch(error => console.log("error", error));
   }
   /* ------ Comments ------ //
   
-  + Search is mirroring the input, not waiting onSubmit
-  + when no search input, no search result 
-  + Option matches shelf in search page
-
   // ------ Comments ------ */
   render() {
     return (
@@ -67,7 +53,7 @@ class BooksApp extends React.Component {
         <Route
           exact
           path="/search"
-          render={() => <AddBooks onMoveBook={(e, b) => this.moveBook(e, b)} />}
+          render={() => <AddBooks onMoveBook={(e, b) => this.moveBook(e, b)} books={this.state.books}/>}
         />
         <Route
           exact

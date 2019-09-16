@@ -20,31 +20,28 @@ class Book extends Component {
               }}
             ></div>
             <div className="book-shelf-changer">
-              <select onChange={e => this.handleChange(e, this.props.book)} defaultValue={this.props.shelf}>
+              <select
+                onChange={e => this.handleChange(e, this.props.book)}
+                defaultValue={
+                  this.props.book.shelf ? this.props.book.shelf : "none"
+                }
+              >
                 <option value="move" disabled>
                   Move to...
                 </option>
-                <option
-                  value="currentlyReading"
-                  selected={this.props.book.shelf === "currentlyReading"}
-                >
-                  Currently Reading
-                </option>
+                <option value="currentlyReading">Currently Reading</option>
                 <option
                   value="wantToRead"
-                  selected={this.props.book.shelf === "wantToRead"}
                 >
                   Want to Read
                 </option>
                 <option
                   value="read"
-                  selected={this.props.book.shelf === "read"}
                 >
                   Read
                 </option>
                 <option
                   value="none"
-                  selected={this.props.book.shelf ? false : true}
                 >
                   None
                 </option>
