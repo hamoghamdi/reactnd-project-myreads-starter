@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.css'
-import {Route} from 'react-router-dom'
+import {Switch, Route} from 'react-router-dom'
 import AddBooks from './AddBooks';
 import BooksShelf from './BooksShelf'
 import * as BooksAPI from "./BooksAPI";
@@ -48,26 +48,26 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        <Route
-          exact
-          path="/search"
-          render={() => (
-            <AddBooks
-              onMoveBook={(e, b) => this.moveBook(e, b)}
-              books={this.state.books}
-            />
-          )}
-        />
-        <Route
-          exact
-          path="/"
-          render={() => (
-            <BooksShelf
-              books={this.state.books}
-              onMoveBook={(e, b) => this.moveBook(e, b)}
-            />
-          )}
-        />
+        <Switch>
+          <Route
+            path="/search"
+            render={() => (
+              <AddBooks
+                onMoveBook={(e, b) => this.moveBook(e, b)}
+                books={this.state.books}
+              />
+            )}
+          />
+          <Route
+            path="/"
+            render={() => (
+              <BooksShelf
+                books={this.state.books}
+                onMoveBook={(e, b) => this.moveBook(e, b)}
+              />
+            )}
+          />
+        </Switch>
       </div>
     );
   }
