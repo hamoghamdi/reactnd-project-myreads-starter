@@ -11,8 +11,6 @@ class BooksApp extends React.Component {
   };
 
   updateBooks = () => {
-    // it returns an obj, containing three atr, each is a list of id's
-    // this.state.map
     BooksAPI.getAll()
       .then(res => {
         console.log("res", res);

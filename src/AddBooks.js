@@ -12,6 +12,7 @@ class AddBooks extends Component {
   search = query => {
     console.log("this is search");
     BooksAPI.search(query.trim()).then(res => {
+      if(query === this.state.searchInput){
       console.log("search res", res);
       if(res.error === "empty query"){
         console.log('do something')
@@ -30,7 +31,7 @@ class AddBooks extends Component {
         return { searchResult: updatedSearch, result:true };
       });
     }
-    })
+    }})
   };
   handleChange = e => {
     const query = e.target.value;

@@ -16,7 +16,10 @@ class Book extends Component {
               style={{
                 width: 128,
                 height: 193,
-                backgroundImage: `url(${this.props.book.imageLinks.thumbnail})`
+                backgroundImage:
+                  this.props.book.hasOwnProperty('imageLinks')
+                    ? `url(${this.props.book.imageLinks.thumbnail})`
+                    : "none"
               }}
             ></div>
             <div className="book-shelf-changer">
@@ -30,21 +33,9 @@ class Book extends Component {
                   Move to...
                 </option>
                 <option value="currentlyReading">Currently Reading</option>
-                <option
-                  value="wantToRead"
-                >
-                  Want to Read
-                </option>
-                <option
-                  value="read"
-                >
-                  Read
-                </option>
-                <option
-                  value="none"
-                >
-                  None
-                </option>
+                <option value="wantToRead">Want to Read</option>
+                <option value="read">Read</option>
+                <option value="none">None</option>
               </select>
             </div>
           </div>
@@ -63,5 +54,3 @@ class Book extends Component {
 }
 
 export default Book;
-
-// onChange={e => this.moveBook(e)}
